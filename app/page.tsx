@@ -531,26 +531,34 @@ export default function ConstructionWebsite() {
             </div>
           </div>
 
-          <form className="backdrop-blur-xl bg-white/5 border border-white/10 p-10 rounded-[40px] shadow-2xl space-y-6">
+          <form 
+            action="https://formspree.io/f/mykakela"
+            method="POST"
+            className="backdrop-blur-xl bg-white/5 border border-white/10 p-10 rounded-[40px] shadow-2xl space-y-6">
             <input
               type="text"
+              name="name"
               placeholder="Ad Soyad"
               className="w-full p-5 rounded-2xl bg-white/5 border border-white/10 text-white placeholder:text-gray-400 outline-none focus:border-yellow-500"
             />
 
             <input
               type="email"
+              name="email"
               placeholder="E-posta"
               className="w-full p-5 rounded-2xl bg-white/5 border border-white/10 text-white placeholder:text-gray-400 outline-none focus:border-yellow-500"
             />
 
             <textarea
+              name="message"
               rows={6}
               placeholder="Mesajınız"
               className="w-full p-5 rounded-2xl bg-white/5 border border-white/10 text-white placeholder:text-gray-400 outline-none focus:border-yellow-500"
             ></textarea>
 
-            <button className="w-full py-5 rounded-2xl bg-yellow-500 hover:bg-yellow-400 text-black font-black text-lg transition shadow-2xl shadow-yellow-500/20">
+            <button 
+              type="submit"
+              className="w-full py-5 rounded-2xl bg-yellow-500 hover:bg-yellow-400 text-black font-black text-lg transition shadow-2xl shadow-yellow-500/20">
               Teklif Gönder
             </button>
           </form>
