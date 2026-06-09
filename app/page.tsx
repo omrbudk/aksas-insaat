@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from 'react'
 import { Building2, Hammer, Phone, Mail, MapPin, ArrowRight, CheckCircle2 } from 'lucide-react'
 
 const scrollToSection = (id: string) => {
@@ -18,6 +19,30 @@ const scrollToSection = (id: string) => {
 }
 
 export default function ConstructionWebsite() {
+
+  const [formStatus, setFormStatus] = useState<'idle' | 'success' | 'error'>('idle')
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    const form = e.currentTarget
+    const formData = new FormData(form)
+
+    const response = await fetch('https://formspree.io/f/mykakela', {
+      method: 'POST',
+      body: formData,
+      headers: {
+        Accept: 'application/json',
+      },
+    })
+
+  if (response.ok) {
+    form.reset()
+    setFormStatus('success')
+  } else {
+    setFormStatus('error')
+  }
+}
   return (
     <div className="min-h-screen bg-white text-gray-800 font-sans overflow-x-hidden scroll-smooth">
       <style>{`
@@ -532,8 +557,7 @@ export default function ConstructionWebsite() {
           </div>
 
           <form 
-            action="https://formspree.io/f/mykakela"
-            method="POST"
+            onSubmit={handleSubmit}
             className="backdrop-blur-xl bg-white/5 border border-white/10 p-10 rounded-[40px] shadow-2xl space-y-6">
             <input
               type="text"
@@ -555,6 +579,18 @@ export default function ConstructionWebsite() {
               placeholder="Mesajınız"
               className="w-full p-5 rounded-2xl bg-white/5 border border-white/10 text-white placeholder:text-gray-400 outline-none focus:border-yellow-500"
             ></textarea>
+
+            {formStatus === 'success' && (
+              <div className="rounded-2xl border border-green-500/20 bg-green-500/10 p-4 text-green-300">
+                ✓ Mesajınız başarıyla gönderildi. En kısa sürede sizinle iletişime geçeceğiz.
+              </div>
+            )}
+
+            {formStatus === 'error' && (
+              <div className="rounded-2xl border border-red-500/20 bg-red-500/10 p-4 text-red-300">
+                Mesaj gönderilemedi. Lütfen tekrar deneyin.
+              </div>
+            )}
 
             <button 
               type="submit"
